@@ -3,7 +3,7 @@
 ## IDE i VCS
 Warunki, w jakich projekt powinien działać poprawnie:
 
-1. Pycharm 2023.1 połączony z kontem na GitHubie
+1. Pycharm 2023.1 połączony z kontem na GitHubie + Python3.9
 2. Po włączeniu PyCharma otwieramy projekt z GitHuba:
    1. Opcja "Get from VCS"
       ![setup01](/docs/img/setup01.png?raw=true)
@@ -25,4 +25,11 @@ Warunki, w jakich projekt powinien działać poprawnie:
       ![setup04](/docs/img/setup04.png?raw=true)
    4. Teraz powinien się wyświetlać interpreter i jego lokalizacja w projekcie oraz zainstalowane pakiety. Klikamy "OK".
       ![setup05](/docs/img/setup05.png?raw=true)
-4. 
+
+
+## Instalacja pakietów
+
+1. W PyCharmie otwieramy Terminal
+   ![setup06](/docs/img/setup06.png?raw=true)
+2. Aktualizujemy/instalujemy pip (`pip install --upgrade pip`)
+3. Instalujemy wymagane pakiety poleceniem `pip install -r requirements.txt`
