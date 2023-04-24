@@ -33,3 +33,7 @@ Warunki, w jakich projekt powinien działać poprawnie:
    ![setup06](/docs/img/setup06.png?raw=true)
 2. Aktualizujemy/instalujemy pip (`pip install --upgrade pip`)
 3. Instalujemy wymagane pakiety poleceniem `pip install -r requirements.txt`
+
+
+## Brawo!!!
+Po wpisaniu `python manage.py runserver` w terminalu powino coś działać w przeglądarce :D
