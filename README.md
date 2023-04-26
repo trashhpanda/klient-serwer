@@ -37,3 +37,8 @@ Warunki, w jakich projekt powinien działać poprawnie:
 
 ## Brawo!!!
 Po wpisaniu `python manage.py runserver` w terminalu powino coś działać w przeglądarce :D
+
+
+## Co dalej?
+Jak mamy wszystko zainstalowane/zaktualizowane to można póki co pobawić się panelem admina (jak ma się superusera).
+Po odpaleniu serwera wystarczy wpisać adres z terminala w przeglądarce i na końcu dodać `/admin/`.
