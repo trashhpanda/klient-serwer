@@ -1,0 +1,13 @@
+Poziomy dostępu aplikacji:
+0. Niezarejestrowany użytkownik 
+    - może przeglądać ofertę, założyć konto lub zalogować się. Nie ma dostępu do rezerwacji lekcji 
+1. Poziom zarejestrowanego użytkownika:
+    -podstawowy poziom dostępu, dla którego wymagane jest założenie konta i zalogowanie się do systemu 
+    -możliwość przeglądania oferty, rezerwacji lekcji, dodania dziecka/osoby, dla której rezerwuje się lekcje, uzupełnienia i zmiany swoich danych 
+2. Poziom instruktora:
+    -możliwość zdefiniowania grafiku na dany dzień, dodania notatki do odbytej lekcji, anulowania lekcji, przeglądania lekcji zarezerwowanych z danym instruktorem, uzupełnienia i zmiany swoich danych 
+3. Poziom administratora danej szkółki:
+    -jedno konto administratora dla jednej szkółki 
+    -możliwość przeglądania danych statystycznych w danym dostępie czasu, przeglądania dyspozycyjności instruktorów i ich uprawnień, uzupełnianie uprawnień instruktora, możliwość anulowania wszystkich lekcji w danym okresie (brak śniegu, zły stan techniczny, stok wynajęty na zawody, etc.)
+4. Poziom administratora całego serwisu
+    -ma dostęp do wszystkich danych, może zatwierdzać administratorów szkółek, dodawać szkółki. Może kontrolować dostęp do zasobów i danych, oraz wprowadzać zmiany w interfejsie.
