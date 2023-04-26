@@ -1,5 +1,15 @@
 # Programowanie w architekturze klient-serwer, semestr letni 22/23
 
+## Dokumentacja do projektu
+
+W miarę możliwości wszystko idzie do folderu "docs", najbardziej aktualna wersja na branchu `main`.
+
+##### W części 2 (27 kwietnia) oddajemy:
+- szkielet bazy danych (utworzone modele w Django):  api->`models.py`
+- diagramy przypadków użycia: docs->`diagram-use-case.pdf`
+- definicje endpointów: docs->`endpointy.md`
+- poziomy dostępu: docs->`poziomy_dostepu.txt`
+
 ## IDE i VCS
 Warunki, w jakich projekt powinien działać poprawnie:
 
