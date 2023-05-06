@@ -47,3 +47,13 @@ Warunki, w jakich projekt powinien działać poprawnie:
 
 ## Brawo!!!
 Po wpisaniu `python manage.py runserver` w terminalu powino coś działać w przeglądarce :D
+
+
+## Aktualizacja requirements.txt
+Jeśli zainstalujemy pakiety, których nie było wcześniej w projekcie i chcemy ułatwić innym robotę, należy zrobić to:
+
+1. Jednorazowo w terminalu wewnątrz środowiska wirtualnego projektu: `pip install pipreqs`
+2. Jednorazowo w terminalu wewnątrz środowiska wirtualnego projektu: `pip install pip-tools`
+3. Za każdym razem przed commitem: `pipreqs --savepath=requirements.in && pip-compile`
+
+Dzięki temu każdy pobierając nowe wersje plików może użyć polecenia `pip install -r requirements.txt` i nie musi szukać brakujących pakietów :)
