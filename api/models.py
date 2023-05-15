@@ -2,19 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# todo przerobić sport z wyboru w instruktorze na osobny model -> użycie w zajęciach lub w rezerwacji
-# todo skończyć rezerwacje
-
 class Student(models.Model):
     """
     Osoby biorące udział w zajęciach.
     """
     user = models.ForeignKey(
         User,
-        related_name='students',
+        related_name='users_students',
         on_delete=models.CASCADE
     )
-    name = models.CharField()
+    name = models.CharField(
+        max_length=50
+    )
     birth_date = models.DateField()
     phone = models.CharField(
         max_length=9,
@@ -26,14 +25,20 @@ class Language(models.Model):
     """
     Języki prowadzenia zajęć.
     """
-    język = models.CharField(unique=True)
+    language = models.CharField(
+        max_length=50,
+        unique=True
+    )
 
 
 class Qualification(models.Model):
     """
     Kwalifikacje instruktorskie.
     """
-    name = models.CharField(unique=True)
+    name = models.CharField(
+        max_length=50,
+        unique=True
+    )
     description = models.TextField()
 
 
@@ -41,13 +46,12 @@ class Instructor(models.Model):
     """
     Instruktorzy pracujący w szkółkach.
     """
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         User,
-        unique=True,
         on_delete=models.CASCADE
     )
     photo = models.ImageField(
-
+        upload_to='img/instructor/'
     )
     SPORTS_CHOICES = [
         ("SKI", "Ski"),
@@ -61,16 +65,15 @@ class Instructor(models.Model):
     )
     languages = models.ManyToManyField(
         Language,
-        related_name='instructors'
+        related_name='instructors_speaking'
     )
     qualifications = models.ManyToManyField(
         Qualification,
-        related_name='instructors'
+        related_name='instructors_with'
     )
     q_expiration = models.DateField()
     commission = models.DecimalField(
-        min=0,
-        max=1,
+        max_digits=3,
         decimal_places=2
     )
 
@@ -79,34 +82,43 @@ class Address(models.Model):
     """
     Adresy szkółek narciarskich.
     """
-    city = models.CharField()
-    street = models.CharField()
-    number = models.CharField()
-    postal_code = models.CharField()
+    city = models.CharField(
+        max_length=50
+    )
+    street = models.CharField(
+        max_length=50
+    )
+    number = models.CharField(
+        max_length=10
+    )
+    postal_code = models.CharField(
+        max_length=6
+    )
 
 
 class School(models.Model):
     """
     Szkółki narciarskie.
     """
-    owner = models.ForeignKey(
+    owner = models.OneToOneField(
         User,
-        unique=True,
         on_delete=models.CASCADE
     )
     name = models.CharField(
-        unique=True,
+        max_length=150,
+        unique=True
     )
     picture = models.ImageField(
-
+        upload_to='img/school/'
     )
     address = models.ForeignKey(
         Address,
+        related_name='schools_at_address',
         on_delete=models.CASCADE
     )
     instructors = models.ManyToManyField(
         Instructor,
-        related_name='schools'
+        related_name='works_for_schools'
     )
     phone = models.CharField(
         max_length=9,
@@ -119,19 +131,30 @@ class ClassType(models.Model):
     """
     school = models.ForeignKey(
         School,
-        unique=True,
+        related_name='offer',
         on_delete=models.CASCADE
     )
-    name = models.CharField()
-    students = models.IntegerField()
-    hours = models.IntegerField()
+    name = models.CharField(
+        max_length=250
+    )
+    SPORT_CHOICES = [
+        ("SKI", "Ski"),
+        ("SNB", "Snowboard")
+    ]
+    sport = models.CharField(
+        max_length=3,
+        choices=SPORT_CHOICES,
+        default="SKI"
+    )
+    num_students = models.IntegerField()
+    num_hours = models.IntegerField()
     class_price = models.DecimalField(
-        min=0,
+        max_digits=5,
         decimal_places=2
     )
-    fees = models.TextField()
+    fees_description = models.TextField()
     total_price = models.DecimalField(
-        min=0,
+        max_digits=5,
         decimal_places=2
     )
 
@@ -142,33 +165,53 @@ class Calendar(models.Model):
     """
     instructor = models.ForeignKey(
         Instructor,
-        related_name='times',
+        related_name='avaliable',
         on_delete=models.CASCADE
     )
     school = models.ForeignKey(
         School,
-        related_name='calendars',
+        related_name='schedule',
         on_delete=models.CASCADE
     )
     start = models.DateTimeField()
     end = models.DateTimeField()
 
 
-class Reservation(models.Model):
+class Booking(models.Model):
     """
     Zarezerwowane zajęcia.
     """
     client = models.ForeignKey(
         User,
-        related_name='client_classes',
+        related_name='booked_classes',
         on_delete=models.CASCADE
     )
     instructor = models.ForeignKey(
         Instructor,
-        related_name='instructor_classes',
+        related_name='teaching_classes',
         on_delete=models.CASCADE
     )
     students = models.ManyToManyField(
         Student,
-        related_name='student_classes'
+        related_name='taking_classes'
+    )
+    start = models.DateTimeField()
+    class_type = models.ForeignKey(
+        ClassType,
+        related_name='booked_like_this',
+        on_delete=models.CASCADE
+    )
+    client_notes = models.TextField()
+    instructor_notes = models.TextField()
+    STATUS_CHOICES = [
+        ("B", "Booked"),
+        ("P", "Paid"),
+        ("C", "Cancelled"),
+        ("A", "Client absent"),
+        ("X", "Complete")
+    ]
+    status = models.CharField(
+        max_length=1,
+        choices=STATUS_CHOICES,
+        default="B"
     )
