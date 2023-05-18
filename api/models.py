@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 class Student(models.Model):
@@ -156,6 +157,12 @@ class ClassType(models.Model):
     total_price = models.DecimalField(
         max_digits=5,
         decimal_places=2
+    )
+    available_start = models.DateField(
+        default=datetime.now
+    )
+    available_end = models.DateField(
+        default=datetime.now
     )
 
 
