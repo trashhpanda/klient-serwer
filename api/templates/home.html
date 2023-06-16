@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+    <title>Szkółka Narciarska</title>
+    <style>
+        /* Dodaj odpowiednie style dla strony */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        /* Stylizacja menu */
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #555;
+        }
+
+        .navbar .active {
+            background-color: #555;
+        }
+
+        /* Stylizacja linków logowania i rejestracji */
+        .navbar .login,
+        .navbar .register {
+            float: right;
+        }
+
+        /* Stylizacja stopki */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a class="active" href="/api/static">Strona główna</a>
+        <a href="oferty.html">Oferty</a>
+        <a href="/wypozyczalnia/">Wypożyczalnia</a>
+        <a href="kontakt.html">Kontakt</a>
+        <a class="login" href="login.html">Zaloguj</a>
+        <a class="register" href="register.html">Zarejestruj</a>
+    </div>
+
+    <div class="container">
+        <h1>Witaj w Szkółce Narciarskiej!</h1>
+        <p>Zapraszamy do skorzystania z naszych profesjonalnych usług narciarskich.</p>
+
+        <p>Mamy do zaoferowania:</p>
+        <ul>
+            <li>Indywidualne lekcje narciarskie</li>
+            <li>Grupowe lekcje narciarskie dla dzieci i dorosłych</li>
+            <li>Wypożyczalnię sprzętu narciarskiego</li>
+            <li>Organizację wyjazdów narciarskich</li>
+        </ul>
+
+        <p>Skontaktuj się z nami, aby umówić się na zajęcia lub dowiedzieć się więcej:</p>
+        <p>
+            Telefon: 123-456-789<br>
+            Email: kontakt@szkolkarciarska.pl
+        </p>
+
+        <p>
+            <a class="button" href="/lekcje/">Zobacz nasze lekcje</a>
+            <a class="button" href="/wypozyczalnia/">Sprawdź ofertę wypożyczalni</a>
+        </p>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 Szkółka Narciarska. Wszelkie prawa zastrzeżone.
+    </div>
+</body>
+</html>
