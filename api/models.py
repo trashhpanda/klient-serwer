@@ -18,7 +18,6 @@ class Student(models.Model):
     birth_date = models.DateField()
     phone = models.CharField(
         max_length=9,
-        blank=True
     )
 
 
@@ -52,7 +51,8 @@ class Instructor(models.Model):
         on_delete=models.CASCADE
     )
     photo = models.ImageField(
-        upload_to='img/instructor/'
+        upload_to='img/instructor/',
+        blank=True
     )
     SPORTS_CHOICES = [
         ("SKI", "Ski"),
@@ -66,17 +66,13 @@ class Instructor(models.Model):
     )
     languages = models.ManyToManyField(
         Language,
-        related_name='instructors_speaking'
+        related_name='instructors_speaking',
     )
     qualifications = models.ManyToManyField(
         Qualification,
         related_name='instructors_with'
     )
     q_expiration = models.DateField()
-    commission = models.DecimalField(
-        max_digits=3,
-        decimal_places=2
-    )
 
 
 class Address(models.Model):
@@ -110,7 +106,8 @@ class School(models.Model):
         unique=True
     )
     picture = models.ImageField(
-        upload_to='img/school/'
+        upload_to='img/school/',
+        blank=True
     )
     address = models.ForeignKey(
         Address,
@@ -119,7 +116,8 @@ class School(models.Model):
     )
     instructors = models.ManyToManyField(
         Instructor,
-        related_name='works_for_schools'
+        related_name='works_for_schools',
+        blank=True
     )
     phone = models.CharField(
         max_length=9,
@@ -153,7 +151,9 @@ class ClassType(models.Model):
         max_digits=5,
         decimal_places=2
     )
-    fees_description = models.TextField()
+    fees_description = models.TextField(
+        blank=True
+    )
     total_price = models.DecimalField(
         max_digits=5,
         decimal_places=2
@@ -200,7 +200,7 @@ class Booking(models.Model):
     )
     students = models.ManyToManyField(
         Student,
-        related_name='taking_classes'
+        related_name='taking_classes',
     )
     start = models.DateTimeField()
     class_type = models.ForeignKey(
@@ -208,8 +208,12 @@ class Booking(models.Model):
         related_name='booked_like_this',
         on_delete=models.CASCADE
     )
-    client_notes = models.TextField()
-    instructor_notes = models.TextField()
+    client_notes = models.TextField(
+        blank=True
+    )
+    instructor_notes = models.TextField(
+        blank=True
+    )
     STATUS_CHOICES = [
         ("B", "Booked"),
         ("P", "Paid"),
