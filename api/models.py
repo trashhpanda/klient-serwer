@@ -2,6 +2,25 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
+INSTRUCTOR_SPORT_CHOICES = [
+        ("SKI", "Ski"),
+        ("SNB", "Snowboard"),
+        ("BTH", "Both")
+    ]
+
+CLASS_SPORT_CHOICES = [
+    ("SKI", "Ski"),
+    ("SNB", "Snowboard")
+]
+
+STATUS_CHOICES = [
+    ("B", "Booked"),
+    ("P", "Paid"),
+    ("C", "Cancelled"),
+    ("A", "Client absent"),
+    ("X", "Complete")
+]
+
 
 class Student(models.Model):
     """
@@ -54,14 +73,9 @@ class Instructor(models.Model):
         upload_to='img/instructor/',
         blank=True
     )
-    SPORTS_CHOICES = [
-        ("SKI", "Ski"),
-        ("SNB", "Snowboard"),
-        ("BTH", "Both")
-    ]
     sports = models.CharField(
         max_length=3,
-        choices=SPORTS_CHOICES,
+        choices=INSTRUCTOR_SPORT_CHOICES,
         default="SKI"
     )
     languages = models.ManyToManyField(
@@ -136,13 +150,9 @@ class ClassType(models.Model):
     name = models.CharField(
         max_length=250
     )
-    SPORT_CHOICES = [
-        ("SKI", "Ski"),
-        ("SNB", "Snowboard")
-    ]
     sport = models.CharField(
         max_length=3,
-        choices=SPORT_CHOICES,
+        choices=CLASS_SPORT_CHOICES,
         default="SKI"
     )
     num_students = models.IntegerField()
@@ -214,13 +224,6 @@ class Booking(models.Model):
     instructor_notes = models.TextField(
         blank=True
     )
-    STATUS_CHOICES = [
-        ("B", "Booked"),
-        ("P", "Paid"),
-        ("C", "Cancelled"),
-        ("A", "Client absent"),
-        ("X", "Complete")
-    ]
     status = models.CharField(
         max_length=1,
         choices=STATUS_CHOICES,
