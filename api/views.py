@@ -1,7 +1,8 @@
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import Group
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserRegistrationSerializer, GroupSerializer
+from .serializers import UserRegistrationSerializer, GroupSerializer, LoginSerializer
 
 
 @api_view(['POST'])
@@ -20,3 +21,20 @@ def get_groups(request):
     groups = Group.objects.all()
     serializer = GroupSerializer(groups, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def login_view(request):
+    serializer = LoginSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.validated_data['user']
+        login(request, user)
+        return Response({'success': True, 'username': user.username})
+    else:
+        return Response(serializer.errors, status=400)
+
+
+@api_view(['POST'])
+def logout_view(request):
+    logout(request)
+    return Response({'success': True})
