@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -35,3 +36,19 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.groups.add(group)
 
         return user
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        username = data.get('username')
+        password = data.get('password')
+
+        user = authenticate(username=username, password=password)
+        if not user or not user.is_active:
+            raise serializers.ValidationError('Invalid username or password')
+
+        data['user'] = user
+        return data

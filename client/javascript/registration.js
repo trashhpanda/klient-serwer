@@ -3,7 +3,7 @@ const registrationStatus = document.getElementById('registration-status');
 const groupSelect = document.getElementById('group');
 
 // Fetch group options from the backend
-axios.get('http://127.0.0.1:8000/api/groups/')  // Replace with your group names API endpoint URL
+axios.get('http://localhost:8000/api/groups/')  // Replace with your group names API endpoint URL
   .then(response => {
     response.data.forEach(group => {
       const option = document.createElement('option');
@@ -37,7 +37,7 @@ registrationForm.addEventListener('submit', (event) => {
 
   console.log(userData)
 
-  axios.post('http://127.0.0.1:8000/api/user/register/', userData)  // Replace with your user registration API endpoint URL
+  axios.post('http://localhost:8000/api/user/register/', userData)  // Replace with your user registration API endpoint URL
     .then(response => {
       const registrationMessage = `User ${response.data.username} registered successfully.`;
       registrationStatus.textContent = registrationMessage;
