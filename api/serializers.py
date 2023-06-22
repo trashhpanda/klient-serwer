@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ObjectDoesNotExist
 
-from api.models import Student, Booking, Instructor
+from api.models import Student, Booking, Instructor, School, Calendar, ClassType, Address, Language, Qualification
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -62,15 +62,30 @@ class InstructorSerializer(serializers.ModelSerializer):
         fields = ('user', 'photo', 'sports', 'languages', 'qualifications', 'q_expiration')
 
 
+class SchoolSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = School
+        fields = ('owner', 'name', 'picture', 'address', 'instructors', 'phone')
+
+
+class CalendarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Calendar
+        fields = ('instructor', 'school', 'start', 'end')
+
+
 class StudentSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Student
         fields = ('user', 'name', 'birth_date', 'phone')
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    students = StudentSerializer(many=True)
-    instructor = InstructorSerializer()
+    client = serializers.PrimaryKeyRelatedField(read_only=True)
+    students = StudentSerializer(many=True, read_only=True)
+    instructor = InstructorSerializer(read_only=True)
 
     class Meta:
         model = Booking
@@ -79,9 +94,40 @@ class BookingSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
-    students = StudentSerializer(many=True)
-    booked_classes = BookingSerializer(many=True)
+    students = StudentSerializer(many=True, read_only=True)
+    booked_classes = BookingSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
         fields = ('username', 'email', 'students', 'booked_classes')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+
+class ClassTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClassType
+        fields = ('school', 'name', 'sport', 'num_students', 'num_hours', 'class_price', 'fees_description',
+                  'total_price', 'available_start', 'available_end')
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ('city', 'street', 'number', 'postal_code')
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ('language',)
+
+
+class QualificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Qualification
+        fields = ('name', 'description')
