@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Panel administracyjny</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .admin-card {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .admin-card h2 {
+      margin-bottom: 20px;
+    }
+
+    .admin-card p {
+      margin-bottom: 10px;
+    }
+
+    .logout-btn {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .user-list {
+      margin-bottom: 10px;
+    }
+
+    .user-list select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .action-buttons {
+      margin-top: 10px;
+    }
+
+    .action-buttons button {
+      margin-right: 5px;
+      background-color: #4c95af;
+      color: #ffffff;
+      border: none;
+      padding: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .action-buttons button:hover {
+      background-color: #2997fa;
+    }
+  </style>
+</head>
+<body>
+  <h1>Panel administracyjny</h1>
+  <div class="admin-card">
+    <h2>Informacje o profilu</h2>
+    <p>Nazwa użytkownika: {{ admin.username }}</p>
+    <p>Email: {{ admin.email }}</p>
+    <p>Imię: {{ admin.first_name }}</p>
+    <p>Nazwisko: {{ admin.last_name }}</p>
+  </div>
+
+  <div class="admin-card">
+    <h2>Statystyki</h2>
+    <p>Liczba klientów: {{ statistics.total_clients }}</p>
+    <p>Liczba instruktorów: {{ statistics.total_instructors }}</p>
+    <p>Liczba rezerwacji: {{ statistics.total_bookings }}</p>
+  </div>
+
+  <div class="admin-card">
+    <h2>Zarządzanie profilami klientów</h2>
+    <div class="user-list">
+      <select id="client-list">
+        <option value="">Wybierz klienta</option>
+        {% for client in clients %}
+        <option value="{{ client.id }}">{{ client.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="action-buttons">
+      <button id="edit-client-btn" disabled>Edytuj</button>
+      <button id="delete-client-btn" disabled>Usuń</button>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <h2>Zarządzanie profilami instruktorów</h2>
+    <div class="user-list">
+      <select id="instructor-list">
+        <option value="">Wybierz instruktora</option>
+        {% for instructor in instructors %}
+        <option value="{{ instructor.id }}">{{ instructor.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="action-buttons">
+      <button id="edit-instructor-btn" disabled>Edytuj</button>
+      <button id="delete-instructor-btn" disabled>Usuń</button>
+    </div>
+  </div>
+
+  <form method="post" action="index.html">
+    <input type="submit" value="Wyloguj się" class="logout-btn">
+  </form>
+
+  <script>
+    var editClientButton = document.getElementById('edit-client-btn');
+    var deleteClientButton = document.getElementById('delete-client-btn');
+    var editInstructorButton = document.getElementById('edit-instructor-btn');
+    var deleteInstructorButton = document.getElementById('delete-instructor-btn');
+
+    document.getElementById('client-list').addEventListener('change', function() {
+      var clientId = this.value;
+      if (clientId) {
+        editClientButton.disabled = false;
+        deleteClientButton.disabled = false;
+      } else {
+        editClientButton.disabled = true;
+        deleteClientButton.disabled = true;
+      }
+    });
+
+    document.getElementById('instructor-list').addEventListener('change', function() {
+      var instructorId = this.value;
+      if (instructorId) {
+        editInstructorButton.disabled = false;
+        deleteInstructorButton.disabled = false;
+      } else {
+        editInstructorButton.disabled = true;
+        deleteInstructorButton.disabled = true;
+      }
+    });
+
+    editClientButton.addEventListener('click', function() {
+      var clientId = document.getElementById('client-list').value;
+      if (clientId) {
+        // Perform edit action for the selected client
+        // Example: window.location.href = '/admin/edit-client?id=' + clientId;
+      }
+    });
+
+    deleteClientButton.addEventListener('click', function() {
+      var clientId = document.getElementById('client-list').value;
+      if (clientId) {
+        // Perform delete action for the selected client
+        // Example: window.location.href = '/admin/delete-client?id=' + clientId;
+      }
+    });
+
+    editInstructorButton.addEventListener('click', function() {
+      var instructorId = document.getElementById('instructor-list').value;
+      if (instructorId) {
+        // Perform edit action for the selected instructor
+        // Example: window.location.href = '/admin/edit-instructor?id=' + instructorId;
+      }
+    });
+
+    deleteInstructorButton.addEventListener('click', function() {
+      var instructorId = document.getElementById('instructor-list').value;
+      if (instructorId) {
+        // Perform delete action for the selected instructor
+        // Example: window.location.href = '/admin/delete-instructor?id=' + instructorId;
+      }
+    });
+  </script>
+</body>
+</html>

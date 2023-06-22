@@ -72,7 +72,7 @@
 
   <p id="login-status"></p>
 
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
     document.getElementById('login-form').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent form submission
@@ -86,8 +86,12 @@
         password: password
       })
       .then(function(response) {
-        // Login successful, redirect to client_profile.html
-        window.location.href = 'client_profile.html';
+        // Login successful, redirect to appropriate profile based on user type
+        if (response.data.user_type === 'client') {
+          window.location.href = 'client_profile.html';
+        } else if (response.data.user_type === 'instructor') {
+          window.location.href = 'instructor_profile.html';
+        }
       })
       .catch(function(error) {
         // Login failed, display error message

@@ -45,10 +45,10 @@
   <p>Imię: {{ user.first_name }}</p>
   <p>Nazwisko: {{ user.last_name }}</p>
 
-  <form method="post" action="{% url 'logout_view' %}">
-    {% csrf_token %}
-    <input type="submit" value="Wyloguj się">
-  </form>
+<form method="post" action="index.html">
+  {% csrf_token %}
+  <input type="submit" value="Wyloguj się">
+</form>
 
   <h1>Zarządzanie rezerwacjami</h1>
 
