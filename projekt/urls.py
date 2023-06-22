@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/user/login/', views.login_view, name='user-login'),
     path('api/user/logout/', views.logout_view, name='user-logout'),
     path('api/groups/', views.get_groups, name='get-groups'),
+    path('api/client/profile/', views.client_profile_view, name='client-profile'),
 ]
 
 # do obrazków

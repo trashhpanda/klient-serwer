@@ -28,7 +28,7 @@ class Student(models.Model):
     """
     user = models.ForeignKey(
         User,
-        related_name='users_students',
+        related_name='students',
         on_delete=models.CASCADE
     )
     name = models.CharField(
