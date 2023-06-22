@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ObjectDoesNotExist
 
-from api.models import Student, Booking
+from api.models import Student, Booking, Instructor
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -56,23 +56,31 @@ class LoginSerializer(serializers.Serializer):
         return data
 
 
+class InstructorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Instructor
+        fields = ('user', 'photo', 'sports', 'languages', 'qualifications', 'q_expiration')
+
+
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ('name', 'birth_date', 'phone')
+        fields = ('user', 'name', 'birth_date', 'phone')
 
 
-class ClientBookingSerializer(serializers.ModelSerializer):
+class BookingSerializer(serializers.ModelSerializer):
     students = StudentSerializer(many=True)
+    instructor = InstructorSerializer()
 
     class Meta:
         model = Booking
-        fields = ('instructor', 'students', 'start', 'class_type', 'client_notes', 'status')
+        fields = ('client', 'instructor', 'students', 'start', 'class_type', 'client_notes',
+                  'instructor_notes', 'status')
 
 
-class ClientProfileSerializer(serializers.ModelSerializer):
+class ClientSerializer(serializers.ModelSerializer):
     students = StudentSerializer(many=True)
-    booked_classes = ClientBookingSerializer(many=True)
+    booked_classes = BookingSerializer(many=True)
 
     class Meta:
         model = User

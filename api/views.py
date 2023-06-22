@@ -3,7 +3,10 @@ from django.contrib.auth.models import Group
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .serializers import UserRegistrationSerializer, GroupSerializer, LoginSerializer, ClientProfileSerializer
+
+from .models import Instructor
+from .serializers import UserRegistrationSerializer, GroupSerializer, LoginSerializer, ClientSerializer, \
+    InstructorSerializer
 
 
 @api_view(['POST'])
@@ -43,9 +46,18 @@ def logout_view(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def client_profile_view(request):
+def client_view(request):
     user = request.user
-    serializer = ClientProfileSerializer(user)
+    serializer = ClientSerializer(user)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def instructors_view(request):
+    instructors = Instructor.objects.all()
+    serializer = InstructorSerializer(instructors, many=True)
 
     return Response(serializer.data)
 
