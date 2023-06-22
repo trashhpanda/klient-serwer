@@ -73,6 +73,27 @@
   <p id="login-status"></p>
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="../javascript/login.js"></script>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+
+      // Perform login request using Axios
+      axios.post('/login', {
+        username: username,
+        password: password
+      })
+      .then(function(response) {
+        // Login successful, redirect to client_profile.html
+        window.location.href = 'client_profile.html';
+      })
+      .catch(function(error) {
+        // Login failed, display error message
+        document.getElementById('login-status').textContent = 'Nieprawidłowa nazwa użytkownika lub hasło.';
+      });
+    });
+  </script>
 </body>
 </html>
