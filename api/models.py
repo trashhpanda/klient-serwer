@@ -2,6 +2,25 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
+INSTRUCTOR_SPORT_CHOICES = [
+        ("SKI", "Ski"),
+        ("SNB", "Snowboard"),
+        ("BTH", "Both")
+    ]
+
+CLASS_SPORT_CHOICES = [
+    ("SKI", "Ski"),
+    ("SNB", "Snowboard")
+]
+
+STATUS_CHOICES = [
+    ("B", "Booked"),
+    ("P", "Paid"),
+    ("C", "Cancelled"),
+    ("A", "Client absent"),
+    ("X", "Complete")
+]
+
 
 class Student(models.Model):
     """
@@ -9,7 +28,7 @@ class Student(models.Model):
     """
     user = models.ForeignKey(
         User,
-        related_name='users_students',
+        related_name='students',
         on_delete=models.CASCADE
     )
     name = models.CharField(
@@ -18,7 +37,6 @@ class Student(models.Model):
     birth_date = models.DateField()
     phone = models.CharField(
         max_length=9,
-        blank=True
     )
 
 
@@ -52,31 +70,23 @@ class Instructor(models.Model):
         on_delete=models.CASCADE
     )
     photo = models.ImageField(
-        upload_to='img/instructor/'
+        upload_to='img/instructor/',
+        blank=True
     )
-    SPORTS_CHOICES = [
-        ("SKI", "Ski"),
-        ("SNB", "Snowboard"),
-        ("BTH", "Both")
-    ]
     sports = models.CharField(
         max_length=3,
-        choices=SPORTS_CHOICES,
+        choices=INSTRUCTOR_SPORT_CHOICES,
         default="SKI"
     )
     languages = models.ManyToManyField(
         Language,
-        related_name='instructors_speaking'
+        related_name='instructors_speaking',
     )
     qualifications = models.ManyToManyField(
         Qualification,
         related_name='instructors_with'
     )
     q_expiration = models.DateField()
-    commission = models.DecimalField(
-        max_digits=3,
-        decimal_places=2
-    )
 
 
 class Address(models.Model):
@@ -110,7 +120,8 @@ class School(models.Model):
         unique=True
     )
     picture = models.ImageField(
-        upload_to='img/school/'
+        upload_to='img/school/',
+        blank=True
     )
     address = models.ForeignKey(
         Address,
@@ -119,7 +130,8 @@ class School(models.Model):
     )
     instructors = models.ManyToManyField(
         Instructor,
-        related_name='works_for_schools'
+        related_name='works_for_schools',
+        blank=True
     )
     phone = models.CharField(
         max_length=9,
@@ -138,13 +150,9 @@ class ClassType(models.Model):
     name = models.CharField(
         max_length=250
     )
-    SPORT_CHOICES = [
-        ("SKI", "Ski"),
-        ("SNB", "Snowboard")
-    ]
     sport = models.CharField(
         max_length=3,
-        choices=SPORT_CHOICES,
+        choices=CLASS_SPORT_CHOICES,
         default="SKI"
     )
     num_students = models.IntegerField()
@@ -153,7 +161,9 @@ class ClassType(models.Model):
         max_digits=5,
         decimal_places=2
     )
-    fees_description = models.TextField()
+    fees_description = models.TextField(
+        blank=True
+    )
     total_price = models.DecimalField(
         max_digits=5,
         decimal_places=2
@@ -200,7 +210,7 @@ class Booking(models.Model):
     )
     students = models.ManyToManyField(
         Student,
-        related_name='taking_classes'
+        related_name='taking_classes',
     )
     start = models.DateTimeField()
     class_type = models.ForeignKey(
@@ -208,15 +218,12 @@ class Booking(models.Model):
         related_name='booked_like_this',
         on_delete=models.CASCADE
     )
-    client_notes = models.TextField()
-    instructor_notes = models.TextField()
-    STATUS_CHOICES = [
-        ("B", "Booked"),
-        ("P", "Paid"),
-        ("C", "Cancelled"),
-        ("A", "Client absent"),
-        ("X", "Complete")
-    ]
+    client_notes = models.TextField(
+        blank=True
+    )
+    instructor_notes = models.TextField(
+        blank=True
+    )
     status = models.CharField(
         max_length=1,
         choices=STATUS_CHOICES,
